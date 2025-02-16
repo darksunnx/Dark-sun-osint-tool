@@ -15,4 +15,4 @@
 (text (module))
 (что делать?)
 (pip install (module name))
- () - обна строчка
+ () - одна строчка
