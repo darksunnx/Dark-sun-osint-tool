@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Sun Private</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+        }
+        body {
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+        .hidden-text {
+            opacity: 0;
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+        .hidden-text:hover {
+            opacity: 1;
+        }
+        .mute-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .mute-button:hover {
+            background-color: #cc0000;
+            transform: scale(1.1);
+        }
+        audio {
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .ip-warning {
+            display: none;
+            color: red;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Dark Sun Private..... скоро</h1>
+    <img class="main-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnC7nDm1nJdVmqlJG3_yKP00eV8CXUcaCwTA&s" alt="Dark Sun Image">
+    <a href="https://t.me/Revichs" class="button">Купить приват</a>
+    <a href="https://t.me/Revichs" class="button">Купить Dark Sun Soft</a>
+    <a href="https://github.com/darksunnx/Dark-sun-osint-tool" class="button">Бесплатная версия Dark Sun Soft</a>
+    <div class="hidden-text" onclick="alert('Вы нашли пасхалку! 🎉')">
+        Наведи на меня...
+    </div>
+    <button class="mute-button" onclick="toggleMute()">Не нажимай!</button>
+    <audio id="bg-music" autoplay loop>
+        <source src="tabletki.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает элемент audio.
+    </audio>
+    <script>
+        let clickCount = 0;
+        const warnings = [
+            "Не нажимай!",
+            "Серьезно, не стоит!",
+            "Я ведь предупреждал...",
+            "Остановись, пока не поздно!",
+            "Продолжай и узнаешь правду...",
+            "Не делай этого!",
+            "Ты сам напросился...",
+            "Еще немного...",
+            "Не надо было нажимать...",
+            "Последний шанс остановиться!"
+        ];
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.animationDuration = `${Math.random() * 2 + 1}s`;
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 3000);
+        }
+        setInterval(createStar, 300);
+
+        function toggleMute() {
+            const audio = document.getElementById('bg-music');
+            clickCount++;
+            if (clickCount <= 10) {
+                document.querySelector('.mute-button').textContent = warnings[clickCount - 1];
+            } else {
+                document.body.style.backgroundColor = "#000000";
+                document.body.style.backgroundImage = "none";
+                document.querySelector('.title').style.display = 'none';
+                document.querySelectorAll('.button').forEach(button => button.style.display = 'none');
+                document.querySelector('.main-image').src = 'Oalt.gif';
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const ipWarning = document.querySelector('.ip-warning');
+                        ipWarning.innerHTML = `Your ip: ${data.ip}. HAHAHAHAHA WAIT A DOX`;
+                        ipWarning.style.display = 'block';
+                    });
+                document.querySelector('.mute-button').style.display = 'none';
+            }
+
+            if (audio.muted) {
+                audio.muted = false;
+            } else {
+                audio.muted = true;
+            }
+        }
+    </script>
+    <div class="ip-warning"></div>
+</body>
+</html>
